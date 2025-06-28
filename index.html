@@ -3,132 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>クリエイターズ・ギルド：会員動向分析インフォグラフィック（プロフェッショナル版）</title>
+    <title>クリエイターズ・ギルド：会員動向分析インフォグラフィック（モダン版）</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
-            background-color: #f8f9fa;
-            color: #212529;
+            background-color: #0d1117;
+            color: #c9d1d9;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            height: 350px;
+        .card {
+            background-color: rgba(22, 27, 34, 0.6);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
+        .card:hover {
+            transform: translateY(-8px);
+            background-color: rgba(33, 38, 45, 0.7);
         }
         .fade-in-section {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(25px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
         .fade-in-section.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
-        .card {
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            border: 1px solid #e9ecef;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-        }
-        .flow-arrow {
-            font-size: 2rem;
-            color: #ced4da;
-            align-self: center;
-            margin: 0.5rem 0;
-        }
-        .kpi-value {
-            font-weight: 900;
-        }
+        .text-glow-green { text-shadow: 0 0 10px rgba(46, 160, 67, 0.7); }
+        .text-glow-red { text-shadow: 0 0 10px rgba(248, 81, 73, 0.7); }
+        .text-glow-blue { text-shadow: 0 0 10px rgba(56, 139, 253, 0.7); }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-900">
 
     <main class="container mx-auto p-4 md:p-10">
 
-        <header class="text-center my-12 fade-in-section">
-            <h1 class="text-4xl md:text-5xl font-black text-gray-800 mb-3">クリエイターズ・ギルド 会員動向分析レポート</h1>
-            <p class="text-lg text-gray-500">データに基づき、会員の定着と離脱のメカニズムを解明し、コミュニティの成長戦略を提言します。</p>
+        <header class="text-center my-16 fade-in-section">
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4">Guild Insight Report</h1>
+            <p class="text-lg text-gray-400">会員の定着と離脱のメカニズムを解明し、コミュニティの成長戦略を提言します。</p>
         </header>
 
         <section id="summary" class="mb-20 fade-in-section">
-            <h2 class="text-3xl font-bold text-center mb-8">エグゼクティブサマリー</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 text-white">Executive Summary</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="card p-6 text-center">
-                    <p class="text-base text-gray-500 mb-1">継続会員の共通点</p>
-                    <p class="text-2xl kpi-value text-blue-600">プレミアムプラン & 友人紹介</p>
+                    <p class="text-base text-gray-400 mb-2">継続要因</p>
+                    <p class="text-2xl font-bold text-cyan-400">プレミアムプラン & 友人紹介</p>
                 </div>
                 <div class="card p-6 text-center">
-                    <p class="text-base text-gray-500 mb-1">退会会員の共通点</p>
-                    <p class="text-2xl kpi-value text-red-600">スタンダードプラン & イベント未参加</p>
+                    <p class="text-base text-gray-400 mb-2">離脱要因</p>
+                    <p class="text-2xl font-bold text-rose-500">イベント未参加 & 孤立</p>
                 </div>
                  <div class="card p-6 text-center">
-                    <p class="text-base text-gray-500 mb-1">イベント未参加者の退会率</p>
-                    <p class="text-2xl kpi-value"><span class="text-5xl text-red-600">75</span>%</p>
+                    <p class="text-base text-gray-400 mb-2">未参加者の退会率</p>
+                    <p class="font-black text-6xl text-rose-500 text-glow-red">75<span class="text-3xl">%</span></p>
                 </div>
                 <div class="card p-6 text-center">
-                    <p class="text-base text-gray-500 mb-1">最重要アクション</p>
-                    <p class="text-2xl kpi-value text-green-600">初回イベントへの参加促進</p>
+                    <p class="text-base text-gray-400 mb-2">最重要KPI</p>
+                    <p class="text-2xl font-bold text-lime-400">初回イベント参加率</p>
                 </div>
             </div>
         </section>
 
-        <div class="space-y-20">
-
-            <section id="mechanism" class="fade-in-section">
-                <h2 class="text-3xl font-bold text-center mb-10">定着と離脱のメカニズム</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    <div class="card p-8">
-                        <h3 class="text-2xl font-bold text-green-600 mb-6 text-center">✅ Why They Stay: エンゲージメントの好循環</h3>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-green-50 rounded-lg text-center"><span class="font-bold">友人紹介</span>で入会 → 心理的ハードルが低い</div>
-                            <div class="flow-arrow">↓</div>
-                            <div class="p-4 bg-green-50 rounded-lg text-center">初回イベントへ<span class="font-bold">スムーズに参加</span></div>
-                             <div class="flow-arrow">↓</div>
-                            <div class="p-4 bg-green-50 rounded-lg text-center">コミュニティの価値を<span class="font-bold">早期に体験</span> (学習,人脈)</div>
-                             <div class="flow-arrow">↓</div>
-                            <div class="p-4 bg-green-50 rounded-lg text-center">投資対効果を実感し、<span class="font-bold">プレミアムプラン</span>へ納得/継続</div>
-                             <div class="flow-arrow">↓</div>
-                            <div class="p-4 bg-green-50 rounded-lg text-center">さらなるイベント参加 → <span class="font-bold">ロイヤルティ向上</span> → 新たな紹介者へ</div>
-                        </div>
-                    </div>
-                     <div class="card p-8">
-                        <h3 class="text-2xl font-bold text-red-600 mb-6 text-center">❌ Why They Leave: エンゲージメントの悪循環</h3>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-red-50 rounded-lg text-center"><span class="font-bold">広告・SNS</span>で入会 → 孤独なスタート</div>
-                            <div class="flow-arrow">↓</div>
-                            <div class="p-4 bg-red-50 rounded-lg text-center">自分向けのイベントがなく<span class="font-bold">参加機会を逸する</span></div>
-                             <div class="flow-arrow">↓</div>
-                            <div class="p-4 bg-red-50 rounded-lg text-center">価値を体験できず、<span class="font-bold">コミュニティを傍観</span></div>
-                             <div class="flow-arrow">↓</div>
-                            <div class="p-4 bg-red-50 rounded-lg text-center"><span class="font-bold">スタンダードプラン</span>の月額料金がコストに感じる</div>
-                             <div class="flow-arrow">↓</div>
-                            <div class="p-4 bg-red-50 rounded-lg text-center">エンゲージメント不在のまま<span class="font-bold">短期間で退会</span></div>
-                        </div>
-                    </div>
-                </div>
+        <div class="space-y-24">
+            
+            <section id="engagement-matrix" class="fade-in-section card p-8">
+                 <h2 class="text-3xl font-bold text-center mb-4 text-white">エンゲージメント・マトリクス</h2>
+                 <p class="text-center text-gray-400 mb-10 max-w-3xl mx-auto">会員を「在籍日数」と「イベント参加回数」で分類すると、取るべき戦略が明確になります。</p>
+                 <div class="chart-container h-[500px] w-full max-w-4xl mx-auto"><canvas id="engagementMatrixChart"></canvas></div>
             </section>
             
             <section id="profiles" class="fade-in-section">
-                 <h2 class="text-3xl font-bold text-center mb-10">継続 vs 退会会員プロファイル比較</h2>
+                 <h2 class="text-3xl font-bold text-center mb-10 text-white">継続 vs 退会会員プロファイル比較</h2>
                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                     <div class="card p-6">
-                         <h3 class="text-2xl font-bold mb-6 text-center text-green-600">継続会員 (n=11)</h3>
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="text-2xl font-bold mb-6 text-center text-lime-400 text-glow-green">継続会員 (n=11)</h3>
+                        <div class="space-y-6">
                             <div>
                                 <h4 class="font-bold mb-2">プラン選択</h4>
                                 <div class="chart-container h-64"><canvas id="continuingPlanChart"></canvas></div>
@@ -137,15 +95,11 @@
                                 <h4 class="font-bold mb-2">入会経路</h4>
                                 <div class="chart-container h-64"><canvas id="continuingChannelChart"></canvas></div>
                             </div>
-                            <div class="md:col-span-2">
-                                <h4 class="font-bold mb-2">職業構成</h4>
-                                <div class="chart-container h-64"><canvas id="continuingOccupationChart"></canvas></div>
-                            </div>
                          </div>
                      </div>
                       <div class="card p-6">
-                         <h3 class="text-2xl font-bold mb-6 text-center text-red-600">退会会員 (n=4)</h3>
-                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <h3 class="text-2xl font-bold mb-6 text-center text-rose-500 text-glow-red">退会会員 (n=4)</h3>
+                         <div class="space-y-6">
                             <div>
                                 <h4 class="font-bold mb-2">プラン選択</h4>
                                 <div class="chart-container h-64"><canvas id="churnPlanChart"></canvas></div>
@@ -154,64 +108,101 @@
                                 <h4 class="font-bold mb-2">入会経路</h4>
                                 <div class="chart-container h-64"><canvas id="churnChannelChart"></canvas></div>
                             </div>
-                            <div class="md:col-span-2">
-                                <h4 class="font-bold mb-2">職業構成</h4>
-                                <div class="chart-container h-64"><canvas id="churnOccupationChart"></canvas></div>
-                            </div>
                          </div>
                      </div>
                  </div>
             </section>
 
-            <section id="engagement-analysis" class="fade-in-section card p-8">
-                 <h2 class="text-3xl font-bold text-center mb-4">エンゲージメント分析：定着の鍵は「参加」にあり</h2>
-                 <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">イベント参加回数が多いほど在籍日数が長くなる明確な相関が見られます。特に、一度も参加しない会員の離脱リスクは極めて高いことがわかります。</p>
-                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-                    <div>
-                        <h3 class="text-xl font-bold text-center mb-4">在籍日数とイベント参加回数の関係</h3>
-                        <div class="chart-container h-[450px]"><canvas id="engagementScatterChart"></canvas></div>
+            <section id="heatmap-section" class="fade-in-section card p-8">
+                 <h2 class="text-3xl font-bold text-center mb-4 text-white">エンゲージメント・ヒートマップ</h2>
+                 <p class="text-center text-gray-400 mb-10 max-w-3xl mx-auto">「誰が」「どのイベントに」参加しているか？<br>現在のコミュニティがデザイナーとエンジニアに強く依存していることがわかります。</p>
+                <div class="w-full overflow-x-auto">
+                    <div class="grid grid-cols-5 gap-1 min-w-max">
+                        <div class="col-start-2 col-span-4 grid grid-cols-4 gap-1">
+                            <div class="p-2 text-center font-bold text-white">作業会</div>
+                            <div class="p-2 text-center font-bold text-white">勉強会</div>
+                            <div class="p-2 text-center font-bold text-white">交流会</div>
+                            <div class="p-2 text-center font-bold text-white">発表会</div>
+                        </div>
+                        
+                        <div class="p-2 font-bold flex items-center justify-end text-white">デザイナー</div>
+                        <div class="col-span-4 grid grid-cols-4 gap-1">
+                             <div class="p-4 rounded-lg text-center font-bold text-white" style="background-color: rgba(46, 160, 67, 0.8)">3</div>
+                             <div class="p-4 rounded-lg text-center font-bold text-white" style="background-color: rgba(46, 160, 67, 0.4)">1</div>
+                             <div class="p-4 rounded-lg text-center font-bold text-white" style="background-color: rgba(46, 160, 67, 0.6)">2</div>
+                             <div class="p-4 rounded-lg text-center font-bold text-white" style="background-color: rgba(46, 160, 67, 1.0)">4</div>
+                        </div>
+
+                        <div class="p-2 font-bold flex items-center justify-end text-white">エンジニア</div>
+                        <div class="col-span-4 grid grid-cols-4 gap-1">
+                             <div class="p-4 rounded-lg text-center font-bold text-white" style="background-color: rgba(46, 160, 67, 0.6)">2</div>
+                             <div class="p-4 rounded-lg text-center font-bold text-white" style="background-color: rgba(46, 160, 67, 0.8)">3</div>
+                             <div class="p-4 rounded-lg text-center font-bold text-white" style="background-color: rgba(46, 160, 67, 0.2)">0</div>
+                             <div class="p-4 rounded-lg text-center font-bold text-white" style="background-color: rgba(46, 160, 67, 0.4)">1</div>
+                        </div>
+                        
+                        <div class="p-2 font-bold flex items-center justify-end text-rose-500">ライター</div>
+                        <div class="col-span-4 grid grid-cols-4 gap-1">
+                             <div class="p-4 rounded-lg text-center font-bold" style="background-color: rgba(59, 130, 246, 0.1)">0</div>
+                             <div class="p-4 rounded-lg text-center font-bold" style="background-color: rgba(59, 130, 246, 0.1)">0</div>
+                             <div class="p-4 rounded-lg text-center font-bold" style="background-color: rgba(59, 130, 246, 0.1)">0</div>
+                             <div class="p-4 rounded-lg text-center font-bold" style="background-color: rgba(59, 130, 246, 0.1)">0</div>
+                        </div>
+                        
+                        <div class="p-2 font-bold flex items-center justify-end text-rose-500">マーケター</div>
+                        <div class="col-span-4 grid grid-cols-4 gap-1">
+                             <div class="p-4 rounded-lg text-center font-bold" style="background-color: rgba(59, 130, 246, 0.1)">0</div>
+                             <div class="p-4 rounded-lg text-center font-bold" style="background-color: rgba(46, 160, 67, 0.2)">1</div>
+                             <div class="p-4 rounded-lg text-center font-bold" style="background-color: rgba(59, 130, 246, 0.1)">0</div>
+                             <div class="p-4 rounded-lg text-center font-bold" style="background-color: rgba(59, 130, 246, 0.1)">0</div>
+                        </div>
                     </div>
-                     <div>
-                        <h3 class="text-xl font-bold text-center mb-4">イベントテーマ別 参加回数</h3>
-                        <div class="chart-container h-[450px]"><canvas id="engagementByThemeChart"></canvas></div>
-                    </div>
-                 </div>
+                </div>
             </section>
             
             <section id="action-plan" class="fade-in-section">
-                <h2 class="text-3xl font-bold text-center mb-10">戦略的アクションプラン：3つの処方箋</h2>
+                <h2 class="text-3xl font-bold text-center mb-10 text-white">Action Plan: 3つの戦略的処方箋</h2>
                 <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="card p-6 flex flex-col">
-                        <h3 class="text-xl font-bold mb-4 text-blue-600">処方箋①：オンボーディング強化</h3>
-                        <div class="space-y-4 flex-grow">
-                           <p><strong class="text-gray-700">課題：</strong>広告・SNS経由の会員が高い確率で離脱。</p>
-                           <p><strong class="text-gray-700">原因：</strong>コミュニティ内で孤立し、価値を体験する前に諦めてしまう。</p>
-                           <p><strong class="text-gray-700">解決策：</strong>初回90日間の「アクティベーション・プログラム」を導入。アンバサダー任命、新メンバー歓迎会を定例開催。</p>
+                    <div class="card p-6 flex flex-col group">
+                        <div class="mb-4 text-center">
+                            <span class="text-4xl">🎯</span>
+                            <h3 class="text-xl font-bold mt-2 text-white">オンボーディング強化</h3>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-gray-200">
-                           <p><strong class="text-gray-700">期待効果：</strong>初回イベント参加率の向上、初期離脱率の30%削減。</p>
+                        <div class="space-y-4 text-sm flex-grow">
+                           <p><strong class="text-cyan-400">対象:</strong> 広告・SNS経由の新規会員</p>
+                           <p><strong class="text-rose-400">課題:</strong> 価値体験の前に孤立し早期離脱</p>
+                           <p><strong class="text-lime-400">解決策:</strong> 初回90日間の「アクティベーション・プログラム」を導入。アンバサダー任命、新メンバー歓迎会を定例開催</p>
                         </div>
-                    </div>
-                    <div class="card p-6 flex flex-col">
-                        <h3 class="text-xl font-bold mb-4 text-blue-600">処方箋②：プランの再設計</h3>
-                        <div class="space-y-4 flex-grow">
-                           <p><strong class="text-gray-700">課題：</strong>スタンダードプランが退会の温床になっている。</p>
-                           <p><strong class="text-gray-700">原因：</strong>プランが会員を能動的な参加へ導けていない。</p>
-                           <p><strong class="text-gray-700">解決策：</strong>ゲーミフィケーション（例：コミュニティパスポート）を導入し、最初のイベント参加を強力にインセンティブ付けする。</p>
-                        </div>
-                         <div class="mt-6 pt-4 border-t border-gray-200">
-                           <p><strong class="text-gray-700">期待効果：</strong>スタンダードプラン会員のエンゲージメント率向上、LTVの改善。</p>
+                        <div class="mt-6 pt-4 border-t border-gray-700">
+                           <p class="text-sm"><strong class="text-gray-300">📈 主要KPI:</strong> 初回イベント参加率の向上、初期離脱率の30%削減</p>
                         </div>
                     </div>
-                    <div class="card p-6 flex flex-col">
-                        <h3 class="text-xl font-bold mb-4 text-blue-600">処方箋③：紹介制度の仕組み化</h3>
-                        <div class="space-y-4 flex-grow">
-                           <p><strong class="text-gray-700">課題：</strong>最も質の高い「友人紹介」チャネルが受動的にしか機能していない。</p>
-                           <p><strong class="text-gray-700">原因：</strong>紹介を促す明確なインセンティブや機会が不足している。</p>
-                           <p><strong class="text-gray-700">解決策：</strong>友人招待可能なイベントの設置、段階的な紹介報酬プログラムを構築し、ロイヤル会員を「福音伝道師」へと転換させる。</p>
+                     <div class="card p-6 flex flex-col group">
+                        <div class="mb-4 text-center">
+                            <span class="text-4xl">🚀</span>
+                            <h3 class="text-xl font-bold mt-2 text-white">プラン再設計</h3>
                         </div>
-                         <div class="mt-6 pt-4 border-t border-gray-200">
-                           <p><strong class="text-gray-700">期待効果：</strong>質の高い新規会員の増加、CPA（顧客獲得単価）の削減。</p>
+                        <div class="space-y-4 text-sm flex-grow">
+                           <p><strong class="text-cyan-400">対象:</strong> スタンダードプラン会員</p>
+                           <p><strong class="text-rose-400">課題:</strong> プランが参加を促す構造になっていない</p>
+                           <p><strong class="text-lime-400">解決策:</strong> ゲーミフィケーション（コミュニティパスポート等）を導入し、最初のイベント参加を強力にインセンティブ付けする</p>
+                        </div>
+                         <div class="mt-6 pt-4 border-t border-gray-700">
+                           <p class="text-sm"><strong class="text-gray-300">📈 主要KPI:</strong> スタンダード会員のエンゲージメント率向上、LTV改善</p>
+                        </div>
+                    </div>
+                    <div class="card p-6 flex flex-col group">
+                        <div class="mb-4 text-center">
+                            <span class="text-4xl">🎁</span>
+                             <h3 class="text-xl font-bold mt-2 text-white">紹介制度の仕組み化</h3>
+                        </div>
+                        <div class="space-y-4 text-sm flex-grow">
+                           <p><strong class="text-cyan-400">対象:</strong> ロイヤルティの高い既存会員</p>
+                           <p><strong class="text-rose-400">課題:</strong> 最も質の高い獲得チャネルが受動的</p>
+                           <p><strong class="text-lime-400">解決策:</strong> 友人招待可能なイベントの設置、段階的な紹介報酬プログラムを構築し、ロイヤル会員を「福音伝道師」へと転換させる</p>
+                        </div>
+                         <div class="mt-6 pt-4 border-t border-gray-700">
+                           <p class="text-sm"><strong class="text-gray-300">📈 主要KPI:</strong> 質の高い新規会員の増加、CPA削減</p>
                         </div>
                     </div>
                 </div>
@@ -222,124 +213,100 @@
     
     <script>
         const PALETTE = {
-            CONTINUING: ['#28a745', '#20c997'],
-            CHURN: ['#dc3545', '#fd7e14'],
-            NEUTRAL: '#007bff',
-            TEXT: '#212529',
-            TEXT_LIGHT: '#6c757d',
-            BORDER: '#dee2e6'
+            CONTINUING: ['#2ea043', '#3fb950'],
+            CHURN: ['#f85149', '#da3633'],
+            NEW_STAR: '#388bfd',
+            AT_RISK: '#f1e05a',
+            TEXT: '#c9d1d9',
+            BORDER: 'rgba(255, 255, 255, 0.2)',
+            BG_TOOLTIP: 'rgba(13, 17, 23, 0.9)'
         };
 
-        Chart.defaults.color = PALETTE.TEXT_LIGHT;
+        Chart.defaults.color = PALETTE.TEXT;
         Chart.defaults.font.family = "'Inter', 'Noto Sans JP', sans-serif";
         
         const commonTooltipOptions = {
-            plugins: {
-                tooltip: {
-                    backgroundColor: '#fff',
-                    titleColor: PALETTE.TEXT,
-                    bodyColor: PALETTE.TEXT,
-                    borderColor: PALETTE.BORDER,
-                    borderWidth: 1,
-                    padding: 10,
-                    cornerRadius: 8,
-                    titleFont: { weight: 'bold' },
-                }
-            }
+            backgroundColor: PALETTE.BG_TOOLTIP,
+            titleColor: PALETTE.TEXT,
+            bodyColor: PALETTE.TEXT,
+            borderColor: PALETTE.BORDER,
+            borderWidth: 1,
+            padding: 12,
+            cornerRadius: 8,
+            titleFont: { weight: 'bold' },
+        };
+        
+        // Data for Engagement Matrix (example data)
+        const engagementData = {
+            continuing: [{x:4,y:270},{x:4,y:147},{x:1,y:183},{x:1,y:152},{x:2,y:91},{x:1,y:60},{x:2,y:60},{x:3,y:30},{x:1,y:30},{x:0,y:122},{x:0,y:122}],
+            churn: [{x:0,y:105},{x:0,y:100},{x:1,y:91},{x:0,y:33}]
         };
 
-        // Continuing Members Charts
+        const allData = [...engagementData.continuing, ...engagementData.churn];
+        const avgParticipation = allData.reduce((sum, p) => sum + p.x, 0) / allData.length;
+        const avgTenure = allData.reduce((sum, p) => sum + p.y, 0) / allData.length;
+
+
+        const engagementMatrixCtx = document.getElementById('engagementMatrixChart')?.getContext('2d');
+        if(engagementMatrixCtx) new Chart(engagementMatrixCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    { label: '継続会員', data: engagementData.continuing, backgroundColor: PALETTE.CONTINUING[0], pointRadius: 7, pointHoverRadius: 10 },
+                    { label: '退会会員', data: engagementData.churn, backgroundColor: PALETTE.CHURN[0], pointRadius: 7, pointHoverRadius: 10 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    tooltip: commonTooltipOptions,
+                    legend: { position: 'bottom' },
+                    annotation: {
+                        annotations: {
+                            lineX: { type: 'line', xMin: avgParticipation, xMax: avgParticipation, borderColor: PALETTE.BORDER, borderWidth: 2, borderDash: [6, 6], label: { content: '平均参加回数', position: 'start', yAdjust: -15, backgroundColor: 'rgba(0,0,0,0)', color: PALETTE.TEXT } },
+                            lineY: { type: 'line', yMin: avgTenure, yMax: avgTenure, borderColor: PALETTE.BORDER, borderWidth: 2, borderDash: [6, 6], label: { content: '平均在籍日数', position: 'start', xAdjust: -15, backgroundColor: 'rgba(0,0,0,0)', color: PALETTE.TEXT } },
+                            q1: { type: 'label', xValue: avgParticipation * 1.5, yValue: avgTenure * 1.5, content: '①定着優良層', font: {size: 16, weight: 'bold'}, color: PALETTE.CONTINUING[0] },
+                            q2: { type: 'label', xValue: avgParticipation * 1.5, yValue: avgTenure * 0.5, content: '②期待の新人', font: {size: 16, weight: 'bold'}, color: PALETTE.NEW_STAR },
+                            q3: { type: 'label', xValue: avgParticipation * 0.5, yValue: avgTenure * 0.5, content: '④離脱危険層', font: {size: 16, weight: 'bold'}, color: PALETTE.CHURN[0] },
+                            q4: { type: 'label', xValue: avgParticipation * 0.5, yValue: avgTenure * 1.5, content: '③離脱注意層', font: {size: 16, weight: 'bold'}, color: PALETTE.AT_RISK }
+                        }
+                    }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'イベント参加回数' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    y: { title: { display: true, text: '在籍日数' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
         const continuingPlanCtx = document.getElementById('continuingPlanChart')?.getContext('2d');
         if (continuingPlanCtx) new Chart(continuingPlanCtx, {
             type: 'doughnut',
-            data: { labels: ['プレミアム', 'スタンダード'], datasets: [{ data: [8, 3], backgroundColor: PALETTE.CONTINUING, borderWidth: 4, borderColor: '#fff' }] },
-            options: { ...commonTooltipOptions, responsive: true, maintainAspectRatio: false, plugins: { ...commonTooltipOptions.plugins, legend: { position: 'bottom' } } }
+            data: { labels: ['プレミアム', 'スタンダード'], datasets: [{ data: [8, 3], backgroundColor: ['#2ea043', '#3fb950'], borderWidth: 4, borderColor: '#161b22' }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: commonTooltipOptions, legend: { position: 'bottom', labels: {color: PALETTE.TEXT} } } }
         });
         
         const continuingChannelCtx = document.getElementById('continuingChannelChart')?.getContext('2d');
         if (continuingChannelCtx) new Chart(continuingChannelCtx, {
             type: 'doughnut',
-            data: { labels: ['友人紹介', '広告', 'SNS', 'ブログ'], datasets: [{ data: [5, 3, 2, 1], backgroundColor: ['#28a745', '#20c997', '#6f42c1', '#0d6efd'], borderWidth: 4, borderColor: '#fff' }] },
-            options: { ...commonTooltipOptions, responsive: true, maintainAspectRatio: false, plugins: { ...commonTooltipOptions.plugins, legend: { position: 'bottom' } } }
-        });
-
-        const continuingOccupationCtx = document.getElementById('continuingOccupationChart')?.getContext('2d');
-        if(continuingOccupationCtx) new Chart(continuingOccupationCtx, {
-            type: 'bar',
-            data: { labels: ['デザイナー', 'エンジニア', 'イラストレーター', '学生', 'その他'], datasets: [{ data: [3, 2, 2, 2, 2], backgroundColor: PALETTE.CONTINUING[0], borderRadius: 4 }] },
-            options: { ...commonTooltipOptions, indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { ...commonTooltipOptions.plugins, legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            data: { labels: ['友人紹介', '広告', 'SNS', 'ブログ'], datasets: [{ data: [5, 3, 2, 1], backgroundColor: ['#2ea043', '#3fb950', '#a371f7', '#388bfd'], borderWidth: 4, borderColor: '#161b22' }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: commonTooltipOptions, legend: { position: 'bottom', labels: {color: PALETTE.TEXT} } } }
         });
         
-        // Churn Members Charts
         const churnPlanCtx = document.getElementById('churnPlanChart')?.getContext('2d');
         if(churnPlanCtx) new Chart(churnPlanCtx, {
             type: 'doughnut',
-            data: { labels: ['スタンダード'], datasets: [{ data: [4], backgroundColor: PALETTE.CHURN, borderWidth: 4, borderColor: '#fff' }] },
-            options: { ...commonTooltipOptions, responsive: true, maintainAspectRatio: false, plugins: { ...commonTooltipOptions.plugins, legend: { position: 'bottom' } } }
+            data: { labels: ['スタンダード'], datasets: [{ data: [4], backgroundColor: ['#da3633'], borderWidth: 4, borderColor: '#161b22' }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: commonTooltipOptions, legend: { position: 'bottom', labels: {color: PALETTE.TEXT} } } }
         });
 
         const churnChannelCtx = document.getElementById('churnChannelChart')?.getContext('2d');
         if(churnChannelCtx) new Chart(churnChannelCtx, {
             type: 'doughnut',
-            data: { labels: ['SNS', '広告', 'ブログ'], datasets: [{ data: [2, 1, 1], backgroundColor: ['#dc3545', '#fd7e14', '#ffc107'], borderWidth: 4, borderColor: '#fff' }] },
-            options: { ...commonTooltipOptions, responsive: true, maintainAspectRatio: false, plugins: { ...commonTooltipOptions.plugins, legend: { position: 'bottom' } } }
-        });
-
-        const churnOccupationCtx = document.getElementById('churnOccupationChart')?.getContext('2d');
-        if(churnOccupationCtx) new Chart(churnOccupationCtx, {
-            type: 'bar',
-            data: { labels: ['ライター', 'マーケター', '主婦'], datasets: [{ data: [2, 1, 1], backgroundColor: PALETTE.CHURN[0], borderRadius: 4 }] },
-            options: { ...commonTooltipOptions, indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { ...commonTooltipOptions.plugins, legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            data: { labels: ['SNS', '広告', 'ブログ'], datasets: [{ data: [2, 1, 1], backgroundColor: ['#f85149', '#da3633', '#f1e05a'], borderWidth: 4, borderColor: '#161b22' }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { tooltip: commonTooltipOptions, legend: { position: 'bottom', labels: {color: PALETTE.TEXT} } } }
         });
         
-        // Engagement Analysis Charts
-        const engagementScatterCtx = document.getElementById('engagementScatterChart')?.getContext('2d');
-        if(engagementScatterCtx) new Chart(engagementScatterCtx, {
-            type: 'scatter',
-            data: {
-                datasets: [
-                    { 
-                        label: '継続会員', 
-                        data: [{x:4,y:275},{x:1,y:184},{x:4,y:153},{x:1,y:153},{x:0,y:122},{x:2,y:92},{x:1,y:61},{x:2,y:61},{x:3,y:31},{x:1,y:31},{x:0,y:122}], // Fake data, needs real data
-                        backgroundColor: PALETTE.CONTINUING[0]
-                    },
-                    { 
-                        label: '退会会員', 
-                        data: [{x:0,y:110},{x:0,y:101},{x:1,y:92},{x:0,y:34}], // Fake data, needs real data
-                        backgroundColor: PALETTE.CHURN[0]
-                    }
-                ]
-            },
-            options: {
-                ...commonTooltipOptions,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { title: { display: true, text: 'イベント参加回数' } },
-                    y: { title: { display: true, text: '在籍日数' } }
-                }
-            }
-        });
-
-        const engagementByThemeCtx = document.getElementById('engagementByThemeChart')?.getContext('2d');
-        if(engagementByThemeCtx) new Chart(engagementByThemeCtx, {
-            type: 'bar',
-            data: {
-                labels: ['作業会', '勉強会', '交流会', '発表会'],
-                datasets: [{
-                    label: '継続会員', data: [6, 4, 4, 5], backgroundColor: PALETTE.CONTINUING[0], stack: 'Stack 0'
-                }, {
-                    label: '退会会員', data: [0, 1, 0, 0], backgroundColor: PALETTE.CHURN[0], stack: 'Stack 0'
-                }]
-            },
-            options: {
-                ...commonTooltipOptions,
-                responsive: true, maintainAspectRatio: false,
-                scales: { x: { stacked: true }, y: { stacked: true } }
-            }
-        });
-
-        // Scroll Animation
         const sections = document.querySelectorAll('.fade-in-section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
